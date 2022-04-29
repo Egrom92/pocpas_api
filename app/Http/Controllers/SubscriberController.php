@@ -25,15 +25,22 @@ class SubscriberController extends Controller
     {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
-        $newPassword = Str::random(10);
-        $passwordList[] = [
-            'site_name' => $request->site,
-            'password' => $newPassword
-        ];
-        $subscriber->password_list = json_encode($passwordList);
-        Log::info($subscriber);
-        $subscriber->save();
-        return $newPassword;
+
+        $hasSite = collect($passwordList)->flatten(1)->firstWhere('site_name', $request->input('site'));
+
+        if (!$hasSite) {
+            $newPassword = Str::random(10);
+            $passwordList[] = [
+                'site_name' => $request->site,
+                'password' => $newPassword
+            ];
+            $subscriber->password_list = json_encode($passwordList);
+            $subscriber->save();
+            return ['pass' => $newPassword, 'status' => true];
+        } else {
+            return ['pass' => $hasSite->password, 'status' => false];
+        }
+
     }
 
     public function store(Request $request)

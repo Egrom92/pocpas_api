@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->string('language_code')->nullable();
             $table->string('master_password');
-            $table->string('password_list')->nullable();
+            $table->text('password_list')->nullable();
             $table->timestamps();
         });
     }
