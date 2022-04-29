@@ -48,6 +48,13 @@ class SubscriberController extends Controller
         return json_decode($subscriber->password_list);
     }
 
+    public function getOnePassword($tg_id, Request $request) {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        $passwordList = json_decode($subscriber->password_list);
+        $password = collect($passwordList)->flatten(1)->firstWhere('site_name', $request->input('site'));
+        return $password;
+    }
+
     public function store(Request $request)
     {
         $sbsc = new Subscriber;
