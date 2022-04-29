@@ -15,9 +15,11 @@
         "david-griffiths/nova-dark-theme": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
+        "laravel/nova": "~3.0",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "laravel/nova": "~3.0",
+        "naif/generate-password": "^1.4",
+        "optimistdigital/nova-simple-repeatable": "^1.4",
         "whitecube/nova-flexible-content": "^0.2.8"
     },
     "require-dev": {

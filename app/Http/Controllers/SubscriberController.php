@@ -5,14 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SubscriberController extends Controller
 {
-    public function index($id): string
+    public function index($tg_id): bool
     {
-        $subscriber = Subscriber::where('tg_id', $id)->first();
-        Log::info((bool)$subscriber);
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         return (bool)$subscriber;
+    }
+
+    public function masterPasswordControl($tg_id, $master_password = null): bool
+    {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        return $subscriber->master_password === $master_password;
+    }
+
+    public function addPassword($tg_id, Request $request)
+    {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        $passwordList = json_decode($subscriber->password_list);
+        $newPassword = Str::random(10);
+        $passwordList[] = [
+            'site_name' => $request->site,
+            'password' => $newPassword
+        ];
+        $subscriber->password_list = json_encode($passwordList);
+        Log::info($subscriber);
+        $subscriber->save();
+        return $newPassword;
     }
 
     public function store(Request $request)

@@ -5,8 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Whitecube\NovaFlexibleContent\Flexible;
+use OptimistDigital\NovaSimpleRepeatable\SimpleRepeatable;
 
 class Subscriber extends Resource
 {
@@ -43,11 +42,16 @@ class Subscriber extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Name', 'name')->sortable()->readonly(),
-            Text::make('Surname', 'surname')->sortable()->readonly(),
+            Text::make('Name', 'first_name')->sortable()->readonly(),
+            Text::make('Surname', 'last_name')->sortable()->readonly(),
             Text::make('Telegram id', 'tg_id')->readonly(),
-            Text::make('Master password', 'master_password')->readonly(),
-            Flexible::make('Password list', 'password_list')
+            Text::make('Username', 'username')->readonly(),
+            Text::make('Language', 'language_code')->readonly(),
+            Text::make('Master password', 'master_password')->hideFromIndex(),
+            SimpleRepeatable::make('Password list', 'password_list', [
+                Text::make('Site name'),
+                Text::make('Password')
+            ])
         ];
     }
 

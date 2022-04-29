@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/subscriber/{id}', [SubscriberController::class, 'index']);
+Route::post('/subscriber/{tg_id}/add', [SubscriberController::class, 'addPassword']);
+Route::get('/subscriber/{tg_id}/{master_password}', [SubscriberController::class, 'masterPasswordControl']);
+Route::get('/subscriber/{tg_id}', [SubscriberController::class, 'index']);
 Route::post('/subscriber', [SubscriberController::class, 'store']);
 

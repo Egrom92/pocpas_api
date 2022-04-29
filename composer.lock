@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b56cb3b72fda53fb7ec7a90381dda36",
+    "content-hash": "57d6204ee0ef9c3f3cb9e0e7a64f2c2c",
     "packages": [
         {
             "name": "brick/math",
@@ -2379,6 +2379,52 @@
             "time": "2022-04-08T15:43:54+00:00"
         },
         {
+            "name": "naif/generate-password",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naifalshaye/nova-random-password-generation.git",
+                "reference": "31cd3961580466bac3862b2f2f25c02ea17bd9d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naifalshaye/nova-random-password-generation/zipball/31cd3961580466bac3862b2f2f25c02ea17bd9d2",
+                "reference": "31cd3961580466bac3862b2f2f25c02ea17bd9d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Naif\\GeneratePassword\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Naif\\GeneratePassword\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova password field with generating random password option",
+            "keywords": [
+                "laravel",
+                "nova",
+                "password"
+            ],
+            "support": {
+                "issues": "https://github.com/naifalshaye/nova-random-password-generation/issues",
+                "source": "https://github.com/naifalshaye/nova-random-password-generation/tree/v1.4"
+            },
+            "time": "2019-03-17T09:11:57+00:00"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "2.57.0",
             "source": {
@@ -2676,6 +2722,106 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.13.2"
             },
             "time": "2021-11-30T19:35:32+00:00"
+        },
+        {
+            "name": "optimistdigital/nova-simple-repeatable",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/optimistdigital/nova-simple-repeatable.git",
+                "reference": "28598f2112b0b5da7f8c6dab580abbd614935357"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/optimistdigital/nova-simple-repeatable/zipball/28598f2112b0b5da7f8c6dab580abbd614935357",
+                "reference": "28598f2112b0b5da7f8c6dab580abbd614935357",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^3.0",
+                "optimistdigital/nova-translations-loader": "^3.0.0",
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "OptimistDigital\\NovaSimpleRepeatable\\SimpleRepeatableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OptimistDigital\\NovaSimpleRepeatable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova simple repeatable rows field.",
+            "keywords": [
+                "Flexible",
+                "field",
+                "keyvalue",
+                "laravel",
+                "nova",
+                "repeatable",
+                "rows"
+            ],
+            "support": {
+                "issues": "https://github.com/optimistdigital/nova-simple-repeatable/issues",
+                "source": "https://github.com/optimistdigital/nova-simple-repeatable/tree/1.4.1"
+            },
+            "time": "2021-10-01T12:53:54+00:00"
+        },
+        {
+            "name": "optimistdigital/nova-translations-loader",
+            "version": "3.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/optimistdigital/nova-translations-loader.git",
+                "reference": "d70d311b3c5b5722ebd27e1223f39e6a75b744b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/optimistdigital/nova-translations-loader/zipball/d70d311b3c5b5722ebd27e1223f39e6a75b744b2",
+                "reference": "d70d311b3c5b5722ebd27e1223f39e6a75b744b2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.21 || ^8.0 || ^9.0",
+                "laravel/nova": "^3.0",
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OptimistDigital\\NovaTranslationsLoader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This Laravel Nova package helps developers load translations into their packages.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "optimistdigital",
+                "translations"
+            ],
+            "support": {
+                "issues": "https://github.com/optimistdigital/nova-translations-loader/issues",
+                "source": "https://github.com/optimistdigital/nova-translations-loader/tree/3.1.4"
+            },
+            "time": "2022-04-08T12:27:58+00:00"
         },
         {
             "name": "phpoption/phpoption",
