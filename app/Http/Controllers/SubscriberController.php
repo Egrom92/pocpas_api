@@ -43,6 +43,11 @@ class SubscriberController extends Controller
 
     }
 
+    public function getAllPassword($tg_id) {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        return json_decode($subscriber->password_list);
+    }
+
     public function store(Request $request)
     {
         $sbsc = new Subscriber;
