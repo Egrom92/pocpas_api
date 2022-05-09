@@ -78,15 +78,14 @@ class SubscriberController extends Controller
         }
     }
 
-    public function getPassword($tg_id, Request $request) {
+    public function getPassword($tg_id, Request $request): array
+    {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $req = $request->input('site');
         if ($req === '*') {
             return collect(json_decode($subscriber->password_list));
         } else {
-            $passwordList = json_decode($subscriber->password_list);
-
-            return collect($passwordList)->firstWhere('site_name', $request->input('site'));
+            return [collect(json_decode($subscriber->password_list))->firstWhere('site_name', $request->input('site'))];
         }
     }
 
