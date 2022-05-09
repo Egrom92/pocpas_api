@@ -21,16 +21,16 @@ class SubscriberController extends Controller
         return $subscriber->master_password === $master_password;
     }
 
-    public function addPassword($tg_id, Request $request)
+    public function addPassword($tg_id, Request $request): array
     {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
 
-        $hasSite = collect($passwordList)->flatten(1)->firstWhere('site_name', $request->input('site'));
+        $hasSite = collect($passwordList)->firstWhere('site_name', $request->input('site'));
 
         if (!$hasSite) {
             $newPassword = Str::random(10);
-            $passwordList[] = [
+            $passwordList[] = (object) [
                 'site_name' => $request->site,
                 'password' => $newPassword
             ];
@@ -43,19 +43,36 @@ class SubscriberController extends Controller
 
     }
 
-    public function getAllPassword($tg_id) {
-        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
-        return json_decode($subscriber->password_list);
-    }
-
-    public function getOnePassword($tg_id, Request $request) {
+    public function deletePassword($tg_id, Request $request): bool
+    {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
-        $password = collect($passwordList)->flatten(1)->firstWhere('site_name', $request->input('site'));
-        return $password;
+
+        $key = array_search($request->input('site'), array_column((array) $passwordList, 'site_name'));
+
+        if ($key !== false) {
+            unset($passwordList[$key]);
+            $subscriber->password_list = json_encode($passwordList);
+            $subscriber->save();
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function store(Request $request)
+    public function getPassword($tg_id, Request $request) {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        $req = $request->input('site');
+        if ($req === '*') {
+            return collect(json_decode($subscriber->password_list));
+        } else {
+            $passwordList = json_decode($subscriber->password_list);
+
+            return collect($passwordList)->firstWhere('site_name', $request->input('site'));
+        }
+    }
+
+    public function store(Request $request): string
     {
         $sbsc = new Subscriber;
 
