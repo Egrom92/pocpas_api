@@ -60,6 +60,24 @@ class SubscriberController extends Controller
         }
     }
 
+    public function editPassword($tg_id, Request $request)
+    {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        $passwordList = json_decode($subscriber->password_list);
+
+        $key = array_search($request->input('site'), array_column((array) $passwordList, 'site_name'));
+
+        if ($key !== false) {
+            $newPassword = Str::random(10);
+            $passwordList[$key]->password = $newPassword;
+            $subscriber->password_list = json_encode($passwordList);
+            $subscriber->save();
+            return $newPassword;
+        } else {
+            return false;
+        }
+    }
+
     public function getPassword($tg_id, Request $request) {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $req = $request->input('site');

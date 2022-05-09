@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/subscriber/{tg_id}/password', [SubscriberController::class, 'getPassword']);
 Route::delete('/subscriber/{tg_id}/password', [SubscriberController::class, 'deletePassword']);
 Route::post('/subscriber/{tg_id}/password', [SubscriberController::class, 'addPassword']);
+Route::patch('/subscriber/{tg_id}/password', [SubscriberController::class, 'editPassword']);
 
 Route::get('/subscriber/{tg_id}/{master_password}', [SubscriberController::class, 'masterPasswordControl']);
 Route::get('/subscriber/{tg_id}', [SubscriberController::class, 'index']);
