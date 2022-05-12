@@ -51,7 +51,7 @@ class SubscriberController extends Controller
         $key = array_search($request->input('site'), array_column((array)$passwordList, 'site_name'));
 
         if ($key !== false) {
-            unset($passwordList[$key]);
+            array_splice($passwordList, $key, 1);
             $subscriber->password_list = json_encode($passwordList);
             $subscriber->save();
             return true;

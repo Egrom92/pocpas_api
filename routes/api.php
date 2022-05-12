@@ -24,7 +24,7 @@ Route::delete('/subscriber/{tg_id}/password', [SubscriberController::class, 'del
 Route::post('/subscriber/{tg_id}/password', [SubscriberController::class, 'addPassword']);
 Route::patch('/subscriber/{tg_id}/password', [SubscriberController::class, 'editPassword']);
 
-Route::get('/subscriber/{tg_id}/{master_password}', [SubscriberController::class, 'masterPasswordControl']);
+Route::get('/subscriber/{tg_id}/master-password/{master_password}', [SubscriberController::class, 'masterPasswordControl']);
 Route::get('/subscriber/{tg_id}', [SubscriberController::class, 'index']);
 Route::post('/subscriber', [SubscriberController::class, 'store']);
 
