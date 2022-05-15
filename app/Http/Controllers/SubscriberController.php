@@ -68,15 +68,9 @@ class SubscriberController extends Controller
         $key = array_search($request->input('site'), array_column((array)$passwordList, 'site_name'));
 
         if ($key !== false) {
-            $response = null;
-            if (!$request->input('new')) {
-                $newPassword = Str::random(10);
-                $passwordList[$key]->password = $newPassword;
-                $response = $newPassword;
-            } else {
-                $passwordList[$key]->site_name = $request->input('new');
-                $response = true;
-            }
+            $newPassword = Str::random(10);
+            $passwordList[$key]->password = $newPassword;
+            $response = $newPassword;
             $subscriber->password_list = json_encode($passwordList);
             $subscriber->save();
             return $response;
@@ -85,15 +79,22 @@ class SubscriberController extends Controller
         }
     }
 
-    public function getPassword($tg_id, Request $request): array|\Illuminate\Support\Collection
+    public function getPassword($tg_id, Request $request)
     {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
-        $req = $request->input('site');
-        if ($req === '*') {
-            return collect(json_decode($subscriber->password_list));
+
+        $password = collect(json_decode($subscriber->password_list))->firstWhere('site_name', $request->input('site'));
+        if ($password) {
+            return $password;
         } else {
-            return [collect(json_decode($subscriber->password_list))->firstWhere('site_name', $request->input('site'))];
+            return false;
         }
+    }
+
+    public function getAllPassword($tg_id): bool|\Illuminate\Support\Collection
+    {
+        $subscriber = Subscriber::where('tg_id', $tg_id)->first();
+        return collect(json_decode($subscriber->password_list));
     }
 
     public function store(Request $request): string
