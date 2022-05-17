@@ -49,7 +49,7 @@ class Subscriber extends Resource
             Text::make('Language', 'language_code')->readonly(),
             Text::make('Master password', 'master_password')->hideFromIndex(),
             SimpleRepeatable::make('Password list', 'password_list', [
-                Text::make('Site name'),
+                Text::make('Keyword'),
                 Text::make('Password')
             ])
         ];

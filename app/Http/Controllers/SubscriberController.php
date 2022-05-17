@@ -26,19 +26,19 @@ class SubscriberController extends Controller
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
 
-        $hasSite = collect($passwordList)->firstWhere('site_name', $request->input('site'));
+        $hasKeyword = collect($passwordList)->firstWhere('keyword', $request->input('keyword'));
 
-        if (!$hasSite) {
+        if (!$hasKeyword) {
             $newPassword = Str::random(10);
             $passwordList[] = (object)[
-                'site_name' => $request->site,
+                'keyword' => $request->input('keyword'),
                 'password' => $newPassword
             ];
             $subscriber->password_list = json_encode($passwordList);
             $subscriber->save();
             return ['pass' => $newPassword, 'status' => true];
         } else {
-            return ['pass' => $hasSite->password, 'status' => false];
+            return ['pass' => $hasKeyword->password, 'status' => false];
         }
 
     }
@@ -48,7 +48,7 @@ class SubscriberController extends Controller
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
 
-        $key = array_search($request->input('site'), array_column((array)$passwordList, 'site_name'));
+        $key = array_search($request->input('keyword'), array_column((array)$passwordList, 'keyword'));
 
         if ($key !== false) {
             array_splice($passwordList, $key, 1);
@@ -65,7 +65,7 @@ class SubscriberController extends Controller
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
         $passwordList = json_decode($subscriber->password_list);
 
-        $key = array_search($request->input('site'), array_column((array)$passwordList, 'site_name'));
+        $key = array_search($request->input('keyword'), array_column((array)$passwordList, 'keyword'));
 
         if ($key !== false) {
             $newPassword = Str::random(10);
@@ -83,7 +83,7 @@ class SubscriberController extends Controller
     {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
 
-        $password = collect(json_decode($subscriber->password_list))->firstWhere('site_name', $request->input('site'));
+        $password = collect(json_decode($subscriber->password_list))->firstWhere('keyword', $request->input('keyword'));
         if ($password) {
             return $password;
         } else {
@@ -94,7 +94,7 @@ class SubscriberController extends Controller
     public function getAllPassword($tg_id): bool|\Illuminate\Support\Collection
     {
         $subscriber = Subscriber::where('tg_id', $tg_id)->first();
-        return collect(json_decode($subscriber->password_list));
+        return $subscriber->password_list ? collect(json_decode($subscriber->password_list)) : false;
     }
 
     public function store(Request $request): string
